@@ -34,34 +34,7 @@
 |----------|--------|---------|--------|
 |Sum Coding|import category_encoders as ce|```encoder = ce.SumEncoder()  encoder.fit(df['col'], y=None)   X_cleaned=encoder.transform(df['col'])```|Sum contrast coding for the encoding of categorical features.|
 |----------|--------|---------|--------|
-|target encoder|import category_encoders as ce|```encoder = ce.TargetEncoder()  encoder.fit(df['Profession'], df['Risk'])   X_cleaned=encoder.transform(df['Profession'])```||
+|target encoder|import category_encoders as ce|```encoder = ce.TargetEncoder()  encoder.fit(df['col1'], df['col2'])   X_cleaned=encoder.transform(df['col1'])```||
 |----------|--------|---------|--------|
-| Weight of Evidence|import pandas as pd; import numpy as np |
-```def iv_woe(data, target, bins=10, show_woe=False):   #Empty Dataframe  newDF,woeDF = pd.DataFrame(), pd.DataFrame()   #Extract Column Names    cols = data.columns  #Run WOE and IV on all the independent variables
-    for ivars in cols[~cols.isin([target])]: 
-        if (data[ivars].dtype.kind in 'bifc') and (len(np.unique(data[ivars]))>10):
-         binned_x = pd.qcut(data[ivars], bins,  duplicates='drop')
-            d0 = pd.DataFrame({'x': binned_x, 'y': data[target]})
-        else:
-            d0 = pd.DataFrame({'x': data[ivars], 'y': data[target]})
-        d = d0.groupby("x", as_index=False).agg({"y": ["count", "sum"]})
-        d.columns = ['Cutoff', 'N', 'Events']
-        d['% of Events'] = np.maximum(d['Events'], 0.5) / d['Events'].sum()
-        d['Non-Events'] = d['N'] - d['Events']
-        d['% of Non-Events'] = np.maximum(d['Non-Events'], 0.5) / d['Non-Events'].sum()
-        d['WoE'] = np.log(d['% of Events']/d['% of Non-Events'])
-        d['IV'] = d['WoE'] * (d['% of Events'] - d['% of Non-Events'])
-        d.insert(loc=0, column='Variable', value=ivars)
-        print("Information value of " + ivars + " is " + str(round(d['IV'].sum(),6)))
-        temp =pd.DataFrame({"Variable" : [ivars], "IV" : [d['IV'].sum()]}, columns = ["Variable", "IV"])
-        newDF=pd.concat([newDF,temp], axis=0)
-        woeDF=pd.concat([woeDF,d], axis=0) 
-#Show WOE Table
-        if show_woe == True:
-            print(d)
-    return newDF, woeDF ```
-In this user-defined function, there are 4 parameters user needs to mention.
-data means data frame in which dependent and independent variable(s) are stored.
-target refers to name of dependent variable. bins refers to number of bins or intervals. By default, it is 10. show_woe = True means you want to print the WOE calculation Table. By default, it is False|: The weight of evidence tells the predictive power of an independent variable in relation to the dependent variable. Since it evolved from credit scoring world, it is generally described as a measure of the separation of good and bad customers.
-"Bad Customers" refers to the customers who defaulted on a loan. and "Good Customers" refers to the customers who paid back loan. ![formula](https://3.bp.blogspot.com/-eqZJpJZ4Kig/VPnZUBaP7II/AAAAAAAADkc/yeW8XVL35dA/s1600/weight%2Bof%2Bevidence.png)|
+| Weight of Evidence|import category_encoders as ce |```encoder = ce.WOEEncoder()  encoder.fit(df['col'], y=None)  X_cleaned = encoder.transform(df['Profession'])```|: The weight of evidence tells the predictive power of an independent variable in relation to the dependent variable. Since it evolved from credit scoring world, it is generally described as a measure of the separation of good and bad customers. "Bad Customers" refers to the customers who defaulted on a loan. and "Good Customers" refers to the customers who paid back loan. ![formula](https://3.bp.blogspot.com/-eqZJpJZ4Kig/VPnZUBaP7II/AAAAAAAADkc/yeW8XVL35dA/s1600/weight%2Bof%2Bevidence.png)|
 |----------|--------|---------|--------|
