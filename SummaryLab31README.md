@@ -1,17 +1,11 @@
 |Method| Library| Code| Result|
 |----------|--------|---------|--------|
-|Dummy Encoder|import pandas as pd|dummy_profession = pd.get_dummies(namedataframe['namecolumn'])
-print(dummy_profession)|get_dummies() returns a dataframe with the column passed in returned as dummy variables. Compares each level to the reference level, intercept being the cell mean of the reference group|
+|Dummy Encoder|import pandas as pd|dummy_profession = pd.get_dummies(namedataframe['namecolumn']) print(dummy_profession)|get_dummies() returns a dataframe with the column passed in returned as dummy variables. Compares each level to the reference level, intercept being the cell mean of the reference group|
 |----------|--------|---------|--------|
-|Label Encoder|from sklearn import preprocessing|# label_encoder object knows how to understand word labels.
-label_encoder = preprocessing.LabelEncoder()
-# Encode labels in column 'Risk'.
-df['Risk']= label_encoder.fit_transform(df['Risk'])
-y=df['Risk']|Encode target values, i.e. y, and not the input X. (hierarchise/code the values colum alone)|
+|Label Encoder|from sklearn import preprocessing|# label_encoder object knows how to understand word labels. label_encoder = preprocessing.LabelEncoder() # Encode labels in column 'Risk'. df['Risk']= label_encoder.fit_transform(df['Risk']) y=df['Risk']|Encode target values, i.e. y, and not the input X. (hierarchise/code the values colum alone)|
 |----------|--------|---------|--------|
 |Backward Difference Coding|import category_encoders as ce|encoder = ce.BackwardDifferenceEncoder()
-encoder.fit(nameofdataframe['namecolumn'], y=None)
-X_cleaned = encoder.transform(nameofdataframe['namecolumn'])| the mean of the dependent variable for a level is compared with the mean of the dependent variable for the prior level. This type of coding may be useful for a nominal or an ordinal variable|
+encoder.fit(nameofdataframe['namecolumn'], y=None) X_cleaned = encoder.transform(nameofdataframe['namecolumn'])| the mean of the dependent variable for a level is compared with the mean of the dependent variable for the prior level. This type of coding may be useful for a nominal or an ordinal variable|
 |----------|--------|---------|--------|
 |BaseN|import category_encoders as ce|encoder = ce.BaseNEncoder()
 encoder.fit(df['namecol'], y=None)
