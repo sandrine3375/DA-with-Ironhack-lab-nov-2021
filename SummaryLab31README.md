@@ -1,26 +1,17 @@
 |Method| Library| Code| Result|
 |----------|--------|---------|--------|
-|Dummy Encoder|import pandas as pd|dummy_profession = pd.get_dummies(namedataframe['namecolumn']) print(dummy_profession)|get_dummies() returns a dataframe with the column passed in returned as dummy variables. Compares each level to the reference level, intercept being the cell mean of the reference group|
+|Dummy Encoder|import pandas as pd|```dummy_profession = pd.get_dummies(namedataframe['namecolumn']) print(dummy_profession)```|get_dummies() returns a dataframe with the column passed in returned as dummy variables. Compares each level to the reference level, intercept being the cell mean of the reference group|
 |----------|--------|---------|--------|
-|Label Encoder|from sklearn import preprocessing|# label_encoder object knows how to understand word labels. label_encoder = preprocessing.LabelEncoder() # Encode labels in column 'Risk'. df['Risk']= label_encoder.fit_transform(df['Risk']) y=df['Risk']|Encode target values, i.e. y, and not the input X. (hierarchise/code the values colum alone)|
+|Label Encoder|from sklearn import preprocessing|```# label_encoder object knows how to understand word labels. label_encoder = preprocessing.LabelEncoder() # Encode labels in column 'Risk'. df['Risk']= label_encoder.fit_transform(df['Risk']) y=df['Risk']```|Encode target values, i.e. y, and not the input X. (hierarchise/code the values colum alone)|
 |----------|--------|---------|--------|
-|Backward Difference Coding|import category_encoders as ce|encoder = ce.BackwardDifferenceEncoder()
-encoder.fit(nameofdataframe['namecolumn'], y=None) X_cleaned = encoder.transform(nameofdataframe['namecolumn'])| the mean of the dependent variable for a level is compared with the mean of the dependent variable for the prior level. This type of coding may be useful for a nominal or an ordinal variable|
+|Backward Difference Coding|import category_encoders as ce|```encoder = ce.BackwardDifferenceEncoder() encoder.fit(nameofdataframe['namecolumn'], y=None) X_cleaned = encoder.transform(nameofdataframe['namecolumn'])```| the mean of the dependent variable for a level is compared with the mean of the dependent variable for the prior level. This type of coding may be useful for a nominal or an ordinal variable|
 |----------|--------|---------|--------|
-|BaseN|import category_encoders as ce|encoder = ce.BaseNEncoder()
-encoder.fit(df['namecol'], y=None)
-X_cleaned = encoder.transform(df['namecol'])
-X_cleaned|Base-N encoder encodes the categories into arrays of their base-N representation. A base of 1 is equivalent to one-hot encoding (not really base-1, but useful), a base of 2 is equivalent to binary encoding. N=number of actual categories is equivalent to vanilla ordinal encoding.|
+|BaseN|import category_encoders as ce|```encoder = ce.BaseNEncoder() encoder.fit(df['namecol'], y=None) X_cleaned = encoder.transform(df['namecol']) X_cleaned```|Base-N encoder encodes the categories into arrays of their base-N representation. A base of 1 is equivalent to one-hot encoding (not really base-1, but useful), a base of 2 is equivalent to binary encoding. N=number of actual categories is equivalent to vanilla ordinal encoding.|
 |----------|--------|---------|--------|
-|Binary|import category_encoders as ce|
-encoder = ce.BinaryEncoder()
-encoder.fit(df['col'], y=None)
-X_cleaned = encoder.transform(df['col'])|Binary encoding for categorical variables, similar to onehot, but stores categories as binary bitstrings.|
+|Binary|import category_encoders as ce|```encoder = ce.BinaryEncoder() encoder.fit(df['col'], y=None)
+X_cleaned = encoder.transform(df['col'])```|Binary encoding for categorical variables, similar to onehot, but stores categories as binary bitstrings.|
 |----------|--------|---------|--------|
-|CatBoost Encoder|import category_encoders as ce|
-encoder = ce.CatBoostEncoder()
-encoder.fit(df['col1'], df['Col2']) #il faut une variable target (y) 
-X_cleaned = encoder.transform(df['Col1'])| This is very similar to leave-one-out encoding, but calculates the values “on-the-fly”. Consequently, the values naturally vary during the training phase and it is not necessary to add random noise.
+|CatBoost Encoder|import category_encoders as ce|```encoder = ce.CatBoostEncoder() encoder.fit(df['col1'], df['Col2']) X_cleaned = encoder.transform(df['Col1'])```| This is very similar to leave-one-out encoding, but calculates the values “on-the-fly”. Consequently, the values naturally vary during the training phase and it is not necessary to add random noise.
 
 Beware, the training data have to be randomly permutated. E.g.:
 
